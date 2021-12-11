@@ -1,0 +1,5 @@
+[0m2021.12.11 18:06:18 INFO  Started: Metals version 0.10.9 in workspace 'D:\Projects\vsce\digital-ocean-manager' for client Visual Studio Code 1.62.3.[0m
+[0m2021.12.11 18:06:19 INFO  time: initialize in 1.34s[0m
+[0m2021.12.11 18:06:20 WARN  Build server is not auto-connectable.[0m
+[0m2021.12.11 18:06:20 WARN  no build tool detected in workspace 'D:\Projects\vsce\digital-ocean-manager'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+[0m2021.12.11 18:08:13 INFO  shutting down Metals[0m
