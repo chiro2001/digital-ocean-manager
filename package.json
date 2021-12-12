@@ -30,6 +30,17 @@
 				"title": "Digital Ocean Manager: Droplet Destroy",
 				"shortTitle": "Detroy",
 				"icon": "media/remove.svg"
+			},
+			{
+				"command": "digital-ocean-manager.dropletRefresh",
+				"title": "Digital Ocean Manager: Refresh Droplet List",
+				"shortTitle": "Refresh",
+				"icon": "media/refresh.svg"
+			},
+			{
+				"command": "digital-ocean-manager.dropletCopyIP",
+				"title": "Digital Ocean Manager: Copy Droplet IP",
+				"shortTitle": "Copy"
 			}
 		],
 		"viewsContainers": {
@@ -53,6 +64,10 @@
 			"view/title": [
 				{
 					"command": "digital-ocean-manager.dropletCreate",
+					"group": "navigation"
+				},
+				{
+					"command": "digital-ocean-manager.dropletRefresh",
 					"group": "navigation"
 				}
 			],

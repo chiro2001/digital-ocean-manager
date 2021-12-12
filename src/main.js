@@ -1,212 +1,22 @@
 // The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-// const path = require('path');
+// Import the module and reference it with the alias vscode in your code belo
 const vscode = require('vscode');
-// import vscode from 'vscode';
 const { DoAPI } = require('./api.cjs');
-// import DoAPI from './api';
-
-const dropletTemplate = {
-	"id": 277449543,
-	"name": "test-droplet",
-	"memory": 1024,
-	"vcpus": 1,
-	"disk": 25,
-	"region": {
-		"name": "Singapore 1",
-		"slug": "sgp1",
-		"features": [
-			"backups",
-			"ipv6",
-			"metadata",
-			"install_agent",
-			"storage",
-			"image_transfer"
-		],
-		"available": true,
-		"sizes": [
-			"s-1vcpu-1gb",
-			"s-1vcpu-1gb-amd",
-			"s-1vcpu-1gb-intel",
-			"s-1vcpu-2gb",
-			"s-1vcpu-2gb-amd",
-			"s-1vcpu-2gb-intel",
-			"s-2vcpu-2gb",
-			"s-2vcpu-2gb-amd",
-			"s-2vcpu-2gb-intel",
-			"s-2vcpu-4gb",
-			"s-2vcpu-4gb-amd",
-			"s-2vcpu-4gb-intel",
-			"s-4vcpu-8gb",
-			"c-2",
-			"c2-2vcpu-4gb",
-			"s-4vcpu-8gb-amd",
-			"s-4vcpu-8gb-intel",
-			"g-2vcpu-8gb",
-			"gd-2vcpu-8gb",
-			"s-8vcpu-16gb",
-			"m-2vcpu-16gb",
-			"c-4",
-			"c2-4vcpu-8gb",
-			"s-8vcpu-16gb-amd",
-			"s-8vcpu-16gb-intel",
-			"m3-2vcpu-16gb",
-			"g-4vcpu-16gb",
-			"so-2vcpu-16gb",
-			"m6-2vcpu-16gb",
-			"gd-4vcpu-16gb",
-			"so1_5-2vcpu-16gb",
-			"m-4vcpu-32gb",
-			"c-8",
-			"c2-8vcpu-16gb",
-			"m3-4vcpu-32gb",
-			"g-8vcpu-32gb",
-			"so-4vcpu-32gb",
-			"m6-4vcpu-32gb",
-			"gd-8vcpu-32gb",
-			"so1_5-4vcpu-32gb",
-			"m-8vcpu-64gb",
-			"c-16",
-			"c2-16vcpu-32gb",
-			"m3-8vcpu-64gb",
-			"g-16vcpu-64gb",
-			"so-8vcpu-64gb",
-			"m6-8vcpu-64gb",
-			"gd-16vcpu-64gb",
-			"so1_5-8vcpu-64gb",
-			"m-16vcpu-128gb",
-			"c-32",
-			"c2-32vcpu-64gb",
-			"m3-16vcpu-128gb",
-			"m-24vcpu-192gb",
-			"g-32vcpu-128gb",
-			"so-16vcpu-128gb",
-			"m6-16vcpu-128gb",
-			"gd-32vcpu-128gb",
-			"m3-24vcpu-192gb",
-			"g-40vcpu-160gb",
-			"so1_5-16vcpu-128gb",
-			"gd-40vcpu-160gb",
-			"so-24vcpu-192gb",
-			"m6-24vcpu-192gb",
-			"so1_5-24vcpu-192gb",
-			"so-32vcpu-256gb",
-			"so1_5-32vcpu-256gb"
-		]
-	},
-	"image": {
-		"id": 93525508,
-		"name": "20.04 (LTS) x64",
-		"distribution": "Ubuntu",
-		"slug": "ubuntu-20-04-x64",
-		"public": true,
-		"regions": [
-			"nyc3",
-			"nyc1",
-			"sfo1",
-			"nyc2",
-			"ams2",
-			"sgp1",
-			"lon1",
-			"ams3",
-			"fra1",
-			"tor1",
-			"sfo2",
-			"blr1",
-			"sfo3"
-		],
-		"created_at": "2021-10-12T21:57:21Z",
-		"min_disk_size": 15,
-		"type": "base",
-		"size_gigabytes": 0.6,
-		"description": "Ubuntu 20.04 x86",
-		"tags": [],
-		"status": "available"
-	},
-	"size_slug": "s-1vcpu-1gb",
-	"locked": false,
-	"created_at": "2021-12-11T14:46:14Z",
-	"status": "active",
-	"networks": {
-		"v4": [
-			{
-				"ip_address": "159.65.132.36",
-				"netmask": "255.255.240.0",
-				"gateway": "159.65.128.1",
-				"type": "public"
-			},
-			{
-				"ip_address": "10.104.0.2",
-				"netmask": "255.255.240.0",
-				"gateway": "",
-				"type": "private"
-			}
-		],
-		"v6": []
-	},
-	"kernel": null,
-	"backup_ids": [],
-	"snapshot_ids": [],
-	"action_ids": [],
-	"features": [
-		"droplet_agent",
-		"private_networking"
-	],
-	"ip_address": "159.65.132.36",
-	"private_ip_address": "10.104.0.2",
-	"ip_v6_address": null,
-	"ssh_keys": [],
-	"backups": false,
-	"ipv6": false,
-	"private_networking": true,
-	"user_data": null,
-	"volumes": [],
-	"tags": [],
-	"monitoring": null,
-	"vpc_uuid": "5b73020f-7351-4b7e-9a87-012a6eacc66e",
-	"_last_used": 0,
-	"tokens": [
-		"*****"
-	],
-	"end_point": "https://api.digitalocean.com/v2/",
-	"next_backup_window": null,
-	"volume_ids": [],
-	"size": {
-		"slug": "s-1vcpu-1gb",
-		"memory": 1024,
-		"vcpus": 1,
-		"disk": 25,
-		"transfer": 1.0,
-		"price_monthly": 5.0,
-		"price_hourly": 0.00744,
-		"regions": [
-			"ams3",
-			"blr1",
-			"fra1",
-			"lon1",
-			"nyc1",
-			"nyc3",
-			"sfo3",
-			"sgp1",
-			"tor1"
-		],
-		"available": true,
-		"description": "Basic"
-	}
-};
 
 const sleep = timeMs => new Promise(resolve => {
 	setTimeout(resolve, timeMs);
 })
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 class DoManager {
 	constructor() {
 		this.updateSettings = this.updateSettings.bind(this);
 		this.checkSettings = this.checkSettings.bind(this);
 		this.create = this.create.bind(this);
 		this.destroy = this.destroy.bind(this);
+		this.refresh = this.refresh.bind(this);
+
+		this.droplet_list = [];
+
 		this.updateSettings();
 		this.api = new DoAPI(this.endpoint, this.token);
 		this.checkSettings();
@@ -225,11 +35,29 @@ class DoManager {
 			this.api = null;
 		}
 	}
+	refresh() {
+		return new Promise(resolve => {
+			vscode.window.withProgress({
+				location: vscode.ProgressLocation.Notification,
+				title: `Refreshing Droplet List`,
+				cancellable: false
+			}, async progress => {
+				progress.report({ increment: 50, message: "Refreshing..." });
+				const resp = await doManager.api.request("/", "GET");
+				const droplets = resp.data.droplets;
+				if (!droplets) {
+					this.droplet_list = [];
+					return this.droplet_list;
+				}
+				this.droplet_list = droplets.map(droplet => new DropletItem(droplet));
+				return resolve(this.droplet_list);
+			});
+		});
+	}
 	async create() {
 		this.updateSettings();
 		this.checkSettings();
 		if (!this.api) return;
-		vscode.window.showInformationMessage('I will create a droplet!');
 		const templates = vscode.workspace.getConfiguration().get("conf.dropletTemplate");
 		console.log(`templates: ${templates}`)
 		console.log(templates);
@@ -241,21 +69,60 @@ class DoManager {
 		if (!selectedValue) return;
 		const selectedName = selectedValue.split(" ")[0];
 		const selectedTemplate = templates.filter(t => t.name == selectedName)[0];
-		console.log(selectedTemplate);
+		const inputName = await vscode.window.showInputBox({
+			value: selectedName,
+			placeHolder: "droplet name",
+			title: "Input new droplet name"
+		});
+		if (this.droplet_list.filter(d => d.name === inputName).length > 0) {
+			vscode.window.showErrorMessage(`Name ${inputName} exists in your droplets now!`);
+			return;
+		}
+		console.log(selectedTemplate, inputName);
 		vscode.window.withProgress({
 			location: vscode.ProgressLocation.Notification,
 			title: `Creating ${selectedValue}`,
 			cancellable: false
-		}, async (progress, progressToken) => {
-			progress.report({ increment: 0, message: "Waiting for creation..." });
-			// const resp = await this.api.request("/", "POST", selectedTemplate);
-			await sleep(1000);
-			progress.report({ increment: 100, message: "Done!" });
-			await sleep(1000);
+		}, async progress => {
+			progress.report({ increment: 50, message: "Creating..." });
+			const resp = await this.api.request("/", "POST", selectedTemplate);
+			console.log(resp);
+			await this.refresh();
+			vscode.window.showInformationMessage(`Create done! Your droplet was created at: ${resp.ip_address}`);
 		});
-
 	}
-	async destroy() { }
+	async destroy(name, destroyAll) {
+		this.updateSettings();
+		this.checkSettings();
+		if (!this.api) return;
+		let selectedName = null;
+		if (!destroyAll) {
+			if (this.droplet_list.length === 0) {
+				vscode.window.showInformationMessage(`You have no droplet to destroy.`);
+				return;
+			}
+			if (this.droplet_list.length > 1) {
+				const selectedValue = await vscode.window.showQuickPick(this.droplet_list.map(droplet => `${droplet.name} ${droplet.size_slug}(${droplet.region})`), { placeHolder: 'Select a droplet to destroy' });
+				if (!selectedValue) return;
+				selectedName = selectedValue.split(" ")[0];
+			}
+		} else {
+			const selectedChoice = await vscode.window.showQuickPick(["Yes", "Cancel"], { placeHolder: "Will destroy all droplets! Continue?" });
+			if (selectedChoice !== "Yes") return;
+		}
+		vscode.window.withProgress({
+			location: vscode.ProgressLocation.Notification,
+			title: `Destroying ${selectedName}`,
+			cancellable: false
+		}, async progress => {
+			progress.report({ increment: 50, message: "Destroying..." });
+			const resp = await this.api.request(selectedName ? `/?name=${selectedName}` : "/", "DELETE");
+			console.log(resp);
+			progress.report({ increment: 40, message: "Refresh droplet list..." });
+			await this.refresh();
+			vscode.window.showInformationMessage(`Destroy done!`);
+		});
+	}
 }
 
 class DropletItem extends vscode.TreeItem {
@@ -271,20 +138,24 @@ class DropletItem extends vscode.TreeItem {
 class DropletContentItem extends vscode.TreeItem {
 	constructor(droplet, key, value) {
 		super(key, vscode.TreeItemCollapsibleState.None);
+		this.key = key;
 		this.droplet = droplet;
 		this.tooltip = `${value}`;
 		this.description = `${value}`;
 		this.contextValue = 'DropletContentItem'
+		this.command = {
+			arguments: [this.droplet, this.key],
+			command: "digital-ocean-manager.dropletCopyIP",
+			title: "Copy",
+			tooltip: "Copy this value"
+		}
 	}
 }
 
 const doManager = new DoManager();
 
 class DropletListProvider {
-	constructor(workspaceRoot) {
-		this.droplet_list = [
-			// new DropletItem(dropletTemplate),
-		];
+	constructor() {
 		console.log('new DropletListProvider!');
 		this.supportKeys = [
 			'id', 'ip_address', 'name', 'size_slug', 'created_at', 'status'
@@ -292,21 +163,13 @@ class DropletListProvider {
 	}
 	async refresh() {
 		console.log("onRefresh");
-		const resp = await doManager.api.request("/", "GET");
-		const droplets = resp.data;
-		if (!droplets || !(droplets instanceof Array)) {
-			this.droplet_list = [];
-			return this.droplet_list;
-		}
-		this.droplet_list = droplets.map(droplet => new DropletItem(droplet));
-		return this.droplet_list;
+		return await doManager.refresh();
 	}
 	getTreeItem(element) {
 		return element;
 	}
 	getChildren(element) {
 		if (!element) {
-			// return Promise.resolve(this.droplet_list);
 			return this.refresh();
 		} else {
 			return Promise.resolve(Object.keys(element.droplet)
@@ -318,6 +181,24 @@ class DropletListProvider {
 	}
 }
 
+async function copyToClipboard(value) {
+	await vscode.env.clipboard.writeText(`${value}`);
+	vscode.window.showInformationMessage(`Copied "${value}" to you clipboard.`)
+}
+
+async function dropletCopyIP(droplet, key) {
+	if (droplet) {
+		if (key === 'ip_address' && !droplet['ip_address']) return;
+		copyToClipboard(key && droplet[key] !== undefined ? droplet[key] : droplet.ip_address);
+	} else {
+		const selectedValue = await vscode.window.showQuickPick(doManager.droplet_list.map(droplet => `${droplet.label} ${droplet.description}`), { placeHolder: 'Select a droplet' });
+		if (!selectedValue) return;
+		const selectedName = selectedValue.split(" ")[0];
+		const dropletTarget = doManager.droplet_list.filter(d => d.label === selectedName)[0];
+		copyToClipboard(dropletTarget.droplet.ip_address);
+	}
+}
+
 /**
  * @param {vscode.ExtensionContext} context
  */
@@ -325,6 +206,8 @@ function activate(context) {
 	console.log("digital-ocean-manager started!");
 	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCreate', doManager.create));
 	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletDestroy', doManager.destroy));
+	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletRefresh', doManager.refresh));
+	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCopyIP', dropletCopyIP));
 
 	vscode.window.registerTreeDataProvider('dropletList', new DropletListProvider());
 }
