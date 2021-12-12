@@ -12,22 +12,89 @@
 	"activationEvents": [
 		"onCommand:digital-ocean-manager.dropletCreate",
 		"onCommand:digital-ocean-manager.dropletList",
-		"onCommand:digital-ocean-manager.dropletDestroy"
+		"onCommand:digital-ocean-manager.dropletDestroy",
+		"onView:dropletList"
 	],
-	"main": "./extension.js",
+	"main": "./src/main.js",
+	"type": "commonjs",
 	"contributes": {
 		"commands": [
 			{
 				"command": "digital-ocean-manager.dropletCreate",
-				"title": "Digital Ocean Manager: Droplet Create"
-			},
-			{
-				"command": "digital-ocean-manager.dropletList",
-				"title": "Digital Ocean Manager: Droplet List"
+				"title": "Digital Ocean Manager: Droplet Create",
+				"shortTitle": "Create",
+				"icon": "media/add.svg"
 			},
 			{
 				"command": "digital-ocean-manager.dropletDestroy",
-				"title": "Digital Ocean Manager: Droplet Destroy"
+				"title": "Digital Ocean Manager: Droplet Destroy",
+				"shortTitle": "Detroy",
+				"icon": "media/remove.svg"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "digital-ocean-manager",
+					"title": "Digital Ocean",
+					"icon": "media/digital-ocean.svg"
+				}
+			]
+		},
+		"views": {
+			"digital-ocean-manager": [
+				{
+					"id": "dropletList",
+					"name": "Droplet List"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "digital-ocean-manager.dropletCreate",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "digital-ocean-manager.dropletDestroy",
+					"group": "inline",
+					"when": "viewItem == DropletContentItem"
+				}
+			]
+		},
+		"configuration":[
+			{
+				"id": "digital-ocean-manager", 
+				"title": "Digital Ocean Manager",
+				"properties": {
+					"conf.api.apiEndpoint": {
+						"type": "string",
+						"default": "http://shimamura.chiro.work:9981/api/v2",
+						"description": "API Endpoint. See https://github.com/chiro2001/do-cli",
+						"scope": "window"
+					},
+					"conf.api.token": {
+						"type": "string",
+						"description": "Digital Ocean API Token.",
+						"scope": "window"
+					},
+					"conf.dropletTemplate": {
+						"type":"array",
+						"default": [
+							{
+								"name": "temp-droplet",
+								"region": "sgp1",
+								"image": "ubuntu-20-04-x64",
+								"size_slug": "s-1vcpu-1gb",
+								"backups": false
+							}
+						],
+						"description": "Templates to create droplet.",
+						"scope": "window"
+					}
+				}
 			}
 		]
 	},
@@ -37,14 +104,17 @@
 		"test": "node ./test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.63.0",
 		"@types/glob": "^7.1.4",
 		"@types/mocha": "^9.0.0",
 		"@types/node": "14.x",
+		"@types/vscode": "^1.63.0",
+		"@vscode/test-electron": "^1.6.2",
 		"eslint": "^8.1.0",
 		"glob": "^7.1.7",
 		"mocha": "^9.1.3",
-		"typescript": "^4.4.4",
-		"@vscode/test-electron": "^1.6.2"
+		"typescript": "^4.4.4"
+	},
+	"dependencies": {
+		"node-fetch": "2"
 	}
 }
