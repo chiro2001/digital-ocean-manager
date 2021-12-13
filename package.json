@@ -6,6 +6,10 @@
 	"engines": {
 		"vscode": "^1.63.0"
 	},
+	"repository": {
+		"type": "github",
+		"url": "https://github.com/chiro2001/digital-ocean-manager"
+	},
 	"categories": [
 		"Other"
 	],
