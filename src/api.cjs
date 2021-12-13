@@ -39,7 +39,7 @@ class DoAPI {
       headers: this.get_headers(),
     };
     // console.log('request', router, method, data, payload);
-    const url = (method !== 'GET' || !data) ? `${this.url}/${router}` : `${this.url}/${router}?${urlEncode(data).slice(1)}`;
+    const url = (method !== 'GET' || !data) ? `${this.url}/${router === '/' ? '' : router}` : `${this.url}/${router}?${urlEncode(data).slice(1)}`;
     const resp = await fetch(url, payload);
     let js = null;
     try { js = await resp.json(); } catch (e) {

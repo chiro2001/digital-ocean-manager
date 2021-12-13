@@ -84,18 +84,18 @@
 				"id": "digital-ocean-manager", 
 				"title": "Digital Ocean Manager",
 				"properties": {
-					"conf.api.apiEndpoint": {
+					"do.manager.api.apiEndpoint": {
 						"type": "string",
-						"default": "http://shimamura.chiro.work:9981/api/v2",
-						"description": "API Endpoint. See https://github.com/chiro2001/do-cli",
+						"default": "https://do.chiro.work",
+						"description": "API Endpoint. See https://github.com/chiro2001/do-cli, https://do-cli.deta.dev avaliables too.",
 						"scope": "window"
 					},
-					"conf.api.token": {
+					"do.manager.api.token": {
 						"type": "string",
 						"description": "Digital Ocean API Token.",
 						"scope": "window"
 					},
-					"conf.dropletTemplate": {
+					"do.manager.dropletTemplate": {
 						"type":"array",
 						"default": [
 							{

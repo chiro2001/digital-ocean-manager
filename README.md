@@ -1,65 +1,77 @@
-# digital-ocean-manager README
+# digital-ocean-manager
 
-This is the README for your extension "digital-ocean-manager". After writing up a brief description, we recommend including the following sections.
+Manage your Digital Ocean droplets on Visual Studio Code! You can just create a droplet (aka server or VPS) when starting work, and then destroy it before left.
 
-## Features
+[toc]
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Get Started
 
-For example if there is an image subfolder under your extension project workspace:
+### Install
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Search for `digital ocean manager` in Visual Studio Code extension market and Install it.
+2. Setup your token
+   1. Visit [here](https://cloud.digitalocean.com/account/api/tokens) to generate your Digital Ocean Token.
+   2. Search `Digital Ocrean Manager` in your Settings (UI).
+   3. Enter your token.
+   4. **RELOAD** your Visual Studio Code.
+   5. Enjoy! 🥰
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Usage
 
-## Requirements
+### View your droplet list
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Click this icon on the sidebar, or the button on the top.
 
-## Extension Settings
+   <img src="README.assets/image-20211213234050163.png" alt="image-20211213234050163" style="zoom: 67%;" />
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+2. List was updated.
 
-For example:
+3. Click items to copy value, for example, you can click `ip_address` to copy "xx.xx.xx.xx" to your clipboard.
 
-This extension contributes the following settings:
+### Create a droplet
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+1. To start, you can:
+   1. `F1` and find the command: `Digital Ocean Manager: Create Destroy`
+   2. Click "add" button on the top view.
+2. Select a droplet template.
+3. Enter the name of new droplet.
+4. A new droplet will be created.
 
-## Known Issues
+### Destroy a droplet
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. To start, you can:
+   1. `F1` and find the command: `Digital Ocean Manager: Droplet Destroy`
+   2. Click "remove" button inline.
+2. (Optional) Select droplet to destroy.
+3. Enter to destroy it.
 
-## Release Notes
+### Create a droplet template
 
-Users appreciate release notes as you update your extension.
+It's a list of object in your Settings (JSON). Default is:
 
-### 1.0.0
+```json
+{
+    "do.manager.dropletTemplate": [
+        {
+            "name": "temp-droplet",
+            "region": "sgp1",
+            "image": "ubuntu-20-04-x64",
+            "size_slug": "s-1vcpu-1gb",
+            "backups": false
+        }
+    ]
+}
+```
 
-Initial release of ...
+### Change API
 
-### 1.0.1
+You can deploy other `do-cli` servers. 👉[do-cli repo](https://github.com/chiro2001/do-cli).
 
-Fixed issue #.
+Available API now:
 
-### 1.1.0
+1. https://do.chiro.work
+2. https://do-cli.deta.dev
 
-Added features X, Y, and Z.
+## Attentions
 
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+I manage droplets by name, destroying droplet will destroy all droplets with the same name!
