@@ -1,7 +1,9 @@
 {
 	"name": "digital-ocean-manager",
-	"displayName": "digital-ocean-manager",
-	"description": "Help you list/create/destroy droplets on VsCode",
+	"displayName": "Digital Ocean Manager",
+	"publisher": "chiro2001",
+	"icon": "media/head.png",
+	"description": "Help you list/create/destroy Digital Ocean droplets on VsCode",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.63.0"
@@ -68,24 +70,32 @@
 			"view/title": [
 				{
 					"command": "digital-ocean-manager.dropletCreate",
-					"group": "navigation"
+					"group": "navigation",
+					"when": "view == dropletList"
 				},
 				{
 					"command": "digital-ocean-manager.dropletRefresh",
-					"group": "navigation"
+					"group": "navigation",
+					"when": "view == dropletList"
 				}
 			],
 			"view/item/context": [
 				{
 					"command": "digital-ocean-manager.dropletDestroy",
 					"group": "inline",
-					"when": "viewItem == DropletContentItem"
+					"when": "view == dropletList && viewItem == DropletContentItem"
 				}
 			]
 		},
-		"configuration":[
+		"viewsWelcome": [
 			{
-				"id": "digital-ocean-manager", 
+				"view": "dropletList",
+				"contents": "No Droplets found. [Refresh](command:digital-ocean-manager.dropletRefresh)\n[Create Droplet](command:digital-ocean-manager.dropletCreate)"
+			}
+		],
+		"configuration": [
+			{
+				"id": "digital-ocean-manager",
 				"title": "Digital Ocean Manager",
 				"properties": {
 					"do.manager.api.apiEndpoint": {
@@ -100,7 +110,7 @@
 						"scope": "window"
 					},
 					"do.manager.dropletTemplate": {
-						"type":"array",
+						"type": "array",
 						"default": [
 							{
 								"name": "temp-droplet",

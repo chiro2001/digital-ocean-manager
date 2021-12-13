@@ -1,11 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code belo
 const vscode = require('vscode');
-const { DoAPI } = require('./api.cjs');
-
-const sleep = timeMs => new Promise(resolve => {
-	setTimeout(resolve, timeMs);
-})
+const { DoAPI } = require('./api.js');
 
 // const formatName = name => name.split('').reduce((a, b) => (a + b).replaceAll())
 const allowChars = "qwertyuiopasdfghjklzxcvbnm-"
@@ -78,8 +74,7 @@ class DoManager {
 		this.checkSettings();
 		if (!this.api) return;
 		const templates = vscode.workspace.getConfiguration().get("do.manager.dropletTemplate");
-		console.log(`templates: ${templates}`)
-		console.log(templates);
+		console.log(`templates:`, templates);
 		if (templates.length === 0) {
 			vscode.window.showWarningMessage('No template found! Setup your template in your settings.');
 			return;
@@ -111,7 +106,7 @@ class DoManager {
 		}, async progress => {
 			progress.report({ increment: 50, message: "Creating..." });
 			const resp = await this.api.request("/", "POST", finalTemplate);
-			console.log(resp);
+			console.log('on create', resp);
 			await this.refresh();
 			vscode.window.showInformationMessage(`Create done! Your droplet was created at: ${resp.data.droplet && resp.data.droplet.ip_address}`);
 		});
@@ -217,12 +212,17 @@ async function dropletCopyIP(droplet, key) {
 /**
  * @param {vscode.ExtensionContext} context
  */
-function activate(context) {
+async function activate(context) {
 	console.log("digital-ocean-manager started!");
-	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCreate', doManager.create));
-	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletDestroy', doManager.destroy));
-	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletRefresh', doManager.refresh));
-	context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCopyIP', dropletCopyIP));
+	const allCommands = await vscode.commands.getCommands();
+	if (!allCommands.find(c => c === 'digital-ocean-manager.dropletCreate'))
+		context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCreate', doManager.create));
+	if (!allCommands.find(c => c === 'digital-ocean-manager.dropletDestroy'))
+		context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletDestroy', doManager.destroy));
+	if (!allCommands.find(c => c === 'digital-ocean-manager.dropletRefresh'))
+		context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletRefresh', doManager.refresh));
+	if (!allCommands.find(c => c === 'digital-ocean-manager.dropletCopyIP'))
+		context.subscriptions.push(vscode.commands.registerCommand('digital-ocean-manager.dropletCopyIP', dropletCopyIP));
 
 	// doManager.listDisposable = vscode.window.registerTreeDataProvider('dropletList', new DropletListProvider());
 	doManager.listDisposable = vscode.window.registerTreeDataProvider('dropletList', doManager);

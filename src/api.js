@@ -1,5 +1,9 @@
 const vscode = require('vscode');
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = require("node-fetch");
+
+const sleep = timeMs => new Promise(resolve => {
+	setTimeout(resolve, timeMs);
+});
 
 function urlEncode(param, key, encode) {
   if (param == null) return '';
@@ -38,14 +42,20 @@ class DoAPI {
       body: method === 'GET' ? undefined : (data ? JSON.stringify(data) : undefined),
       headers: this.get_headers(),
     };
-    // console.log('request', router, method, data, payload);
+    console.log('request', router, method, data, payload);
     const url = (method !== 'GET' || !data) ? `${this.url}/${router === '/' ? '' : router}` : `${this.url}/${router}?${urlEncode(data).slice(1)}`;
     const resp = await fetch(url, payload);
+    const respContent = await resp.text();
     let js = null;
-    try { js = await resp.json(); } catch (e) {
-      console.error(e);
-      vscode.window.showErrorMessage(`API Error: ${e}`);
-      return { code: resp.status, error: resp.statusText };
+    try { js = JSON.parse(respContent); } catch (e) {
+      const hasTimeout = respContent && (respContent.includes(">Timeout<"));
+      if (!hasTimeout) {
+        console.error(e, router);
+        vscode.window.showErrorMessage(`API Error: ${e}`);
+      } else {
+        await sleep(5000);
+      }
+      return { code: hasTimeout ? 200 : resp.status, error: resp.statusText };
     }
     console.log('raw js:', js);
     if (!js) {
